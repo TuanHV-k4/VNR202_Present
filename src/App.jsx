@@ -119,7 +119,7 @@ export default function App() {
   const [unlocked, setUnlocked] = useState(false)
   const [copied, setCopied] = useState(false)
   const [page, setPage] = useState(0)
-  const gesture = useRef({ locked: false, touchY: 0 })
+  const gesture = useRef({ locked: false, touchY: 0, touchTarget: null })
   const pageCount = 6
   const activeNode = allNodes[active]
   const completion = Math.max(.14, visited.size / allNodes.length)
@@ -129,21 +129,31 @@ export default function App() {
   const next = () => choose((active + 1) % allNodes.length)
   useEffect(() => { const onKey = (event) => { if (event.target.matches('input,button,a')) return; if (event.key === 'ArrowRight' || event.key === 'ArrowDown') goPage(page + 1); if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') goPage(page - 1) }; window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey) }, [page])
   useEffect(() => {
-    const canTurn = (direction) => {
+    const canTurn = (direction, eventTarget) => {
       const scene = document.querySelectorAll('.story-page')[page]
-      if (!scene || scene.scrollHeight <= scene.clientHeight + 2) return true
-      if (direction > 0) return scene.scrollTop + scene.clientHeight >= scene.scrollHeight - 2
-      return scene.scrollTop <= 2
+      if (!scene) return true
+      let element = eventTarget instanceof Element ? eventTarget : scene
+      while (element && scene.contains(element)) {
+        const styles = window.getComputedStyle(element)
+        const scrollable = /(auto|scroll)/.test(styles.overflowY) && element.scrollHeight > element.clientHeight + 2
+        if (scrollable) {
+          const hasRoomBelow = element.scrollTop + element.clientHeight < element.scrollHeight - 2
+          const hasRoomAbove = element.scrollTop > 2
+          if ((direction > 0 && hasRoomBelow) || (direction < 0 && hasRoomAbove)) return false
+        }
+        element = element.parentElement
+      }
+      return true
     }
-    const turn = (direction) => {
-      if (gesture.current.locked || !canTurn(direction)) return
+    const turn = (direction, eventTarget) => {
+      if (gesture.current.locked || !canTurn(direction, eventTarget)) return
       gesture.current.locked = true
       goPage(page + direction)
       window.setTimeout(() => { gesture.current.locked = false }, 900)
     }
-    const onWheel = (event) => { if (Math.abs(event.deltaY) > 22) turn(event.deltaY > 0 ? 1 : -1) }
-    const onTouchStart = (event) => { gesture.current.touchY = event.touches[0]?.clientY ?? 0 }
-    const onTouchEnd = (event) => { const endY = event.changedTouches[0]?.clientY ?? gesture.current.touchY; const distance = gesture.current.touchY - endY; if (Math.abs(distance) > 54) turn(distance > 0 ? 1 : -1) }
+    const onWheel = (event) => { if (Math.abs(event.deltaY) > 22) turn(event.deltaY > 0 ? 1 : -1, event.target) }
+    const onTouchStart = (event) => { gesture.current.touchY = event.touches[0]?.clientY ?? 0; gesture.current.touchTarget = event.target }
+    const onTouchEnd = (event) => { const endY = event.changedTouches[0]?.clientY ?? gesture.current.touchY; const distance = gesture.current.touchY - endY; if (Math.abs(distance) > 54) turn(distance > 0 ? 1 : -1, gesture.current.touchTarget) }
     window.addEventListener('wheel', onWheel, { passive: true })
     window.addEventListener('touchstart', onTouchStart, { passive: true })
     window.addEventListener('touchend', onTouchEnd, { passive: true })
