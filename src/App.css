@@ -247,8 +247,9 @@ html,body,.app-shell{background:var(--void);color:var(--paper)}
 @media(max-width:760px){.topbar nav{background:oklch(16% .05 29)}.story-page{background:oklch(20% .07 30 / .95)!important}.hero-copy{background:linear-gradient(0deg,oklch(20% .07 30) 80%,transparent)}}
 
 /* Archive rows must accommodate a two-line title plus its date. */
-.workspace .fixed-index{grid-auto-rows:minmax(64px,auto)}
-.workspace .fixed-index button{min-height:64px;padding-block:7px;align-items:start}
+.workspace .fixed-index{grid-template-rows:none;grid-auto-flow:row;grid-auto-rows:minmax(64px,auto);align-content:start;overflow-y:auto;overscroll-behavior:contain}
+.workspace .fixed-index button{min-height:64px;padding-block:8px;align-items:start}
+.workspace .fixed-index button>span{padding-top:2px;line-height:1}
 .workspace .fixed-index button p{min-width:0}
-.workspace .fixed-index button b{min-height:0;font-size:11px;line-height:1.32}
+.workspace .fixed-index button b{min-height:0;font-size:11px;line-height:1.35;text-wrap:pretty}
 .workspace .fixed-index button small{display:block;margin-top:4px;font-size:9px;line-height:1.25;white-space:nowrap}
