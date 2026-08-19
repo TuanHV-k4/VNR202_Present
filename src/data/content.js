@@ -2,15 +2,16 @@ export const chapters = [
   {
     id: '1939-1940', number: 'I', period: '1939—1940', part: 'Phần thân chìa', title: 'Chọn đúng hướng rèn',
     lead: 'Trước khi có ổ khóa, phải có người quyết định rèn chìa theo hình dạng nào. Năm 1939, khi cả thế giới còn chưa biết chiến tranh sẽ đi về đâu, Đảng đã chọn hướng rèn ấy.',
+    presenterNote: 'Năm 1939, chưa ai biết chiến tranh sẽ kết thúc ra sao. Điều cần nhìn vào không phải là thời cơ chưa xuất hiện, mà là việc Đảng đã sớm xác định đúng chiếc chìa cần rèn: độc lập dân tộc.',
     close: 'Đến cuối 1940, chiếc chìa khóa mới chỉ có phần thân — biết rõ hình dạng cần rèn, nhưng răng cưa thì chưa có. Phải mất thêm 4 năm nữa, những chi tiết quyết định mới được mài giũa...',
     nodes: [
-      { id:'darkest-hour', date:'09/1939 — 09/1940', title:'Gông xiềng siết chặt hơn bao giờ hết', type:'Bối cảnh lịch sử', paragraphs:[
+      { id:'darkest-hour', date:'09/1939 — 09/1940', title:'Gông xiềng siết chặt hơn bao giờ hết', type:'Node 1 · Bối cảnh lịch sử', focusLabel:'Bằng chứng bác bỏ “ăn may”', paragraphs:[
         'Tháng 9/1939, Chiến tranh thế giới thứ hai bùng nổ. Chính phủ Đaladie (Pháp) đàn áp mạnh lực lượng dân chủ trong nước và phong trào cách mạng ở thuộc địa.',
         'Ngày 28/9/1939, Toàn quyền Đông Dương ra nghị định cấm tuyên truyền cộng sản, đặt Đảng Cộng sản Đông Dương ra ngoài vòng pháp luật, giải tán hội đoàn, đóng cửa báo chí.',
         'Tháng 6/1940, Pháp đầu hàng Đức. Thực dân Pháp ở Đông Dương thi hành chính sách thời chiến, phát xít hóa bộ máy thống trị, tăng cường vơ vét.',
         'Tháng 9/1940, quân phiệt Nhật vào Đông Dương, Pháp đầu hàng và câu kết với Nhật; nhân dân Đông Dương chịu cảnh “một cổ hai tròng”.'],
         insight:'Đây là lúc tình thế đen tối nhất, không hề có dấu hiệu nào cho thấy sáu năm sau sẽ có thời cơ độc lập. Việc Đảng vẫn hành động ngay lúc này chính là bằng chứng đầu tiên bác bỏ “ăn may”.' },
-      { id:'tw6', date:'11/1939', title:'Hội nghị Trung ương 6', type:'Bà Điểm, Hóc Môn — Gia Định', paragraphs:[
+      { id:'tw6', date:'11/1939', title:'Hội nghị Trung ương 6', type:'Node 2 · Bà Điểm, Hóc Môn — Gia Định', focusLabel:'Hình dạng đầu tiên của chiếc chìa', paragraphs:[
         'Ngay khi bị dồn vào thế bí mật, Đảng không co cụm phòng thủ mà chủ động đổi cả chiến lược.',
         'Xác định: “Bước đường sinh tồn của các dân tộc Đông Dương không có con đường nào khác hơn là con đường đánh đổ đế quốc Pháp... để giành lấy giải phóng độc lập.”',
         'Tạm gác khẩu hiệu “cách mạng ruộng đất”, thay bằng chống địa tô cao, chống cho vay nặng lãi — đặt quyền lợi dân tộc lên trên quyền lợi giai cấp.',
@@ -18,7 +19,7 @@ export const chapters = [
         'Đảng rút vào hoạt động bí mật, chuyển trọng tâm công tác về nông thôn nhưng vẫn giữ vững cơ sở ở đô thị.',
         'Chỉ một ngày sau nghị định đàn áp cộng sản 28/9/1939, Trung ương Đảng gửi thông báo toàn Đảng: “Hoàn cảnh Đông Dương sẽ tiến bước đến vấn đề dân tộc giải phóng.” Dự báo này đi trước thời cuộc gần sáu năm.'],
         insight:'Đây là “hình dạng” đầu tiên của chiếc chìa khóa — xác định đúng ổ khóa cần mở là độc lập dân tộc, trước khi biết chính xác khi nào ổ khóa sẽ xuất hiện.' },
-      { id:'first-uprisings', date:'09 — 11/1940', title:'Những nhát rèn còn thô', type:'Đấu tranh vũ trang đầu tiên', paragraphs:[
+      { id:'first-uprisings', date:'27/09 — 23/11/1940', title:'Những nhát rèn còn thô', type:'Node 3 · Các cuộc đấu tranh vũ trang đầu tiên', focusLabel:'Kinh nghiệm phải trả bằng tổn thất', paragraphs:[
         'Khởi nghĩa Bắc Sơn (27/9/1940): nhân quân Pháp ở Lạng Sơn rút chạy trước sức ép của Nhật, nhân dân Bắc Sơn nổi dậy chiếm đồn Mỏ Nhài. Đội du kích Bắc Sơn ra đời — tiền thân của lực lượng vũ trang cách mạng sau này.',
         'Khởi nghĩa Nam Kỳ (23/11/1940): quân khởi nghĩa đánh chiếm nhiều đồn bốt, thành lập chính quyền cách mạng ở một số địa phương, nhưng bị thực dân Pháp đàn áp khốc liệt, tổn thất nặng nề.',
         'Cả hai cuộc khởi nghĩa đều chưa thành công trọn vẹn, nhưng để lại kinh nghiệm xương máu và nòng cốt lực lượng. Sách gọi đây là “những tiếng súng báo hiệu cho cuộc khởi nghĩa toàn quốc”.'],
