@@ -35,7 +35,7 @@ export const chapters = [
       { id:'tw8', date:'05/1941', title:'Khớp răng quan trọng nhất', type:'Hội nghị Trung ương 8 — Pác Bó', paragraphs:[
         'Hội nghị hoàn chỉnh triệt để những gì Hội nghị Trung ương 6 mới đặt nền móng.',
         'Khẳng định dứt khoát nhiệm vụ giải phóng dân tộc: “Cuộc cách mạng ở Đông Dương hiện tại... là một cuộc cách mạng chỉ phải giải quyết một vấn đề cần kíp ‘dân tộc giải phóng’.” Vấn đề ruộng đất tiếp tục tạm gác.',
-        'Thành lập Mặt trận Việt Nam Độc lập Đồng minh (Việt Minh), tập hợp mọi lực lượng dưới các hội cứu quốc, không phân biệt giai cấp, miễn có lòng yêu nước.',
+        '25/10/1941: Thành lập Mặt trận Việt Nam Độc lập Đồng minh (Việt Minh), tập hợp mọi lực lượng dưới các hội cứu quốc, không phân biệt giai cấp, miễn có lòng yêu nước.',
         'Xác định chuẩn bị khởi nghĩa vũ trang là nhiệm vụ trung tâm: “phải luôn luôn chuẩn bị một lực lượng sẵn sàng... với lực lượng sẵn có, ta có thể lãnh đạo một cuộc khởi nghĩa từng phần... mở đường cho một cuộc tổng khởi nghĩa to lớn.”',
         'Chủ trương sau khi cách mạng thành công sẽ lập nước Việt Nam Dân chủ Cộng hòa.',
         'Hội nghị Trung ương 8 khắc phục triệt để hạn chế của Luận cương chính trị 10/1930. Đường lối được liên tục tự phê bình và điều chỉnh suốt hơn mười năm, không phải “ăn may” tìm ra công thức đúng ngay lần đầu.'],
