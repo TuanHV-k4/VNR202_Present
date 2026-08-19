@@ -119,7 +119,7 @@ export default function App() {
   const [unlocked, setUnlocked] = useState(false)
   const [copied, setCopied] = useState(false)
   const [page, setPage] = useState(0)
-  const gesture = useRef({ locked: false, touchY: 0, touchTarget: null })
+  const gesture = useRef({ locked: false, touchY: 0 })
   const pageCount = 6
   const activeNode = allNodes[active]
   const completion = Math.max(.14, visited.size / allNodes.length)
@@ -127,37 +127,28 @@ export default function App() {
   const goPage = (nextPage) => setPage(Math.max(0, Math.min(pageCount - 1, nextPage)))
   const choose = (index) => { setActive(index); setVisited(current => new Set([...current, index])); goPage(2) }
   const next = () => choose((active + 1) % allNodes.length)
-  useEffect(() => { const onKey = (event) => { if (event.target.matches('input,button,a')) return; if (event.key === 'ArrowRight' || event.key === 'ArrowDown') goPage(page + 1); if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') goPage(page - 1) }; window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey) }, [page])
   useEffect(() => {
-    const canTurn = (direction, eventTarget) => {
-      const scene = document.querySelectorAll('.story-page')[page]
-      if (!scene) return true
-      let element = eventTarget instanceof Element ? eventTarget : scene
-      while (element && scene.contains(element)) {
-        const styles = window.getComputedStyle(element)
-        const scrollable = /(auto|scroll)/.test(styles.overflowY) && element.scrollHeight > element.clientHeight + 2
-        if (scrollable) {
-          const hasRoomBelow = element.scrollTop + element.clientHeight < element.scrollHeight - 2
-          const hasRoomAbove = element.scrollTop > 2
-          if ((direction > 0 && hasRoomBelow) || (direction < 0 && hasRoomAbove)) return false
-        }
-        element = element.parentElement
-      }
-      return true
+    const onKey = (event) => {
+      if (event.target.matches('input,textarea,select,[contenteditable="true"]')) return
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') { event.preventDefault(); goPage(page + 1) }
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') { event.preventDefault(); goPage(page - 1) }
     }
-    const turn = (direction, eventTarget) => {
-      if (gesture.current.locked || !canTurn(direction, eventTarget)) return
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [page])
+  useEffect(() => { document.querySelectorAll('.story-page')[page]?.scrollTo({ top: 0 }) }, [page])
+  useEffect(() => {
+    const turn = (direction) => {
+      if (gesture.current.locked) return
       gesture.current.locked = true
       goPage(page + direction)
       window.setTimeout(() => { gesture.current.locked = false }, 900)
     }
-    const onWheel = (event) => { if (Math.abs(event.deltaY) > 22) turn(event.deltaY > 0 ? 1 : -1, event.target) }
-    const onTouchStart = (event) => { gesture.current.touchY = event.touches[0]?.clientY ?? 0; gesture.current.touchTarget = event.target }
-    const onTouchEnd = (event) => { const endY = event.changedTouches[0]?.clientY ?? gesture.current.touchY; const distance = gesture.current.touchY - endY; if (Math.abs(distance) > 54) turn(distance > 0 ? 1 : -1, gesture.current.touchTarget) }
-    window.addEventListener('wheel', onWheel, { passive: true })
+    const onTouchStart = (event) => { gesture.current.touchY = event.touches[0]?.clientY ?? 0 }
+    const onTouchEnd = (event) => { const endY = event.changedTouches[0]?.clientY ?? gesture.current.touchY; const distance = gesture.current.touchY - endY; if (Math.abs(distance) > 54) turn(distance > 0 ? 1 : -1) }
     window.addEventListener('touchstart', onTouchStart, { passive: true })
     window.addEventListener('touchend', onTouchEnd, { passive: true })
-    return () => { window.removeEventListener('wheel', onWheel); window.removeEventListener('touchstart', onTouchStart); window.removeEventListener('touchend', onTouchEnd) }
+    return () => { window.removeEventListener('touchstart', onTouchStart); window.removeEventListener('touchend', onTouchEnd) }
   }, [page])
 
   return <div className="app-shell">
@@ -229,6 +220,6 @@ export default function App() {
         <div className="spoken-answer"><span>Bản trả lời ngắn để thuyết trình</span><p>Theo nhóm, gọi Cách mạng Tháng Tám là một cuộc “ăn may” là không công bằng với lịch sử. Nhật đầu hàng chỉ tạo ra thời cơ khách quan, còn khả năng biến thời cơ thành thắng lợi là kết quả của một quá trình chuẩn bị lâu dài và chủ động. Từ năm 1939, Đảng đã chuyển hướng chiến lược, đặt giải phóng dân tộc lên hàng đầu. Giai đoạn 1941–1944, đường lối được hoàn chỉnh, Việt Minh được thành lập, lực lượng chính trị, lực lượng vũ trang và căn cứ địa được xây dựng. Năm 1945, Đảng tiếp tục phản ứng kịp thời trước cuộc đảo chính Nhật–Pháp, phát động cao trào kháng Nhật và chuẩn bị chính quyền cách mạng. Vì vậy, khi thời cơ xuất hiện vào tháng Tám, cách mạng có đủ lực lượng và năng lực lãnh đạo để phát lệnh Tổng khởi nghĩa, giành chính quyền trong cả nước. Thắng lợi không phải tất yếu theo nghĩa tự động sẽ xảy ra, mà là kết quả tất yếu có điều kiện: thời cơ khách quan chỉ phát huy tác dụng khi gặp sự chuẩn bị chủ quan đầy đủ và quyết định hành động đúng lúc.</p><button onClick={async()=>{await navigator.clipboard?.writeText('Theo nhóm, gọi Cách mạng Tháng Tám là một cuộc “ăn may” là không công bằng với lịch sử. Nhật đầu hàng chỉ tạo ra thời cơ khách quan, còn khả năng biến thời cơ thành thắng lợi là kết quả của một quá trình chuẩn bị lâu dài và chủ động. Từ năm 1939, Đảng đã chuyển hướng chiến lược, đặt giải phóng dân tộc lên hàng đầu. Giai đoạn 1941–1944, đường lối được hoàn chỉnh, Việt Minh được thành lập, lực lượng chính trị, lực lượng vũ trang và căn cứ địa được xây dựng. Năm 1945, Đảng tiếp tục phản ứng kịp thời trước cuộc đảo chính Nhật–Pháp, phát động cao trào kháng Nhật và chuẩn bị chính quyền cách mạng. Vì vậy, khi thời cơ xuất hiện vào tháng Tám, cách mạng có đủ lực lượng và năng lực lãnh đạo để phát lệnh Tổng khởi nghĩa, giành chính quyền trong cả nước. Thắng lợi không phải tất yếu theo nghĩa tự động sẽ xảy ra, mà là kết quả tất yếu có điều kiện: thời cơ khách quan chỉ phát huy tác dụng khi gặp sự chuẩn bị chủ quan đầy đủ và quyết định hành động đúng lúc.');setCopied(true);setTimeout(()=>setCopied(false),1800)}}>{copied?'Đã sao chép':'Sao chép câu trả lời'}</button></div>
       </section>
     </main>
-    <div className="page-controls" aria-label="Điều hướng trang"><button onClick={()=>goPage(page-1)} disabled={page===0} aria-label="Trang trước">←</button><span><b>{String(page+1).padStart(2,'0')}</b> / {String(pageCount).padStart(2,'0')}</span><button onClick={()=>goPage(page+1)} disabled={page===pageCount-1} aria-label="Trang sau">→</button></div>
+    <div className="page-controls" aria-label="Điều hướng trang bằng phím mũi tên" title="Dùng các phím mũi tên để chuyển trang"><button onClick={()=>goPage(page-1)} disabled={page===0} aria-label="Trang trước">←</button><span><b>{String(page+1).padStart(2,'0')}</b> / {String(pageCount).padStart(2,'0')}</span><button onClick={()=>goPage(page+1)} disabled={page===pageCount-1} aria-label="Trang sau">→</button></div>
   </div>
 }
